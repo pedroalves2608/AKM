@@ -130,7 +130,28 @@
   .dr-nav button:disabled { opacity:.38; cursor:default; }
 
   @media (max-width:760px){ .g-axis,.g-mrow,.g-row{ grid-template-columns:108px 1fr; } .g-rowlabel{ padding:10px; } .lens button{ padding:8px 12px; } }
-  @media (max-width:640px){ .wrap{ padding:32px 18px 60px; } .controls{ flex-direction:column; align-items:stretch; } }
+  @media (max-width:640px){
+    .wrap{ padding:28px 16px 56px; }
+    .controls{ flex-direction:column; align-items:stretch; gap:14px; }
+    .lens{ width:100%; }
+    .lens button{ flex:1; padding:9px 6px; }
+    .lens button small{ font-size:9px; }
+    .mtoggle{ justify-content:space-between; }
+    /* Gantt rola na horizontal, preservando largura mínima legível */
+    .gantt{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    .gantt > *{ min-width:680px; }
+    /* dica visual de que rola */
+    .ganttwrap-hint{ display:block; }
+    /* gaveta vira tela cheia */
+    .drawer{ width:100vw; }
+    .dr-top{ padding:22px 20px 16px; }
+    .dr-body{ padding:18px 20px 22px; }
+    .dr-title{ font-size:21px; }
+    .title{ font-size:clamp(30px,8vw,40px); }
+  }
+  @media (max-width:380px){
+    .gantt > *{ min-width:600px; }
+  }
   @media (prefers-reduced-motion:reduce){ *{ transition:none !important; } }
 </style>
 </head>
@@ -155,6 +176,7 @@
   </div>
 
   <div class="ganttnote"><span class="gn-dot"></span> Sequência <b>ilustrativa</b> · a ordem e a lógica das ondas são definitivas; as durações exatas são estabelecidas no diagnóstico</div>
+  <div class="ganttwrap-hint" style="display:none; font-family:var(--mono); font-size:10px; color:var(--ink-faint); margin-bottom:8px; letter-spacing:0.02em;">← arraste para ver a linha do tempo completa →</div>
   <div class="gantt" id="gantt"></div>
 
   <p class="caption" id="caption"></p>
