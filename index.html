@@ -67,12 +67,12 @@
   .g-weeks .wklab { position:absolute; top:9px; font-family:var(--mono); font-size:10px; color:var(--ink-faint); transform:translateX(6px); }
 
   /* milestone band */
-  .g-mrow { display:grid; grid-template-columns:158px 1fr; border-bottom:1px solid var(--line); background:linear-gradient(var(--akm-blue-bg), var(--card)); overflow:hidden; transition:max-height .28s ease, opacity .2s ease; max-height:80px; }
+  .g-mrow { display:grid; grid-template-columns:158px 1fr; border-bottom:1px solid var(--line); background:linear-gradient(var(--akm-blue-bg), var(--card)); overflow:hidden; transition:max-height .28s ease, opacity .2s ease; max-height:96px; }
   .g-mrow.hidden { max-height:0; opacity:0; border-bottom-width:0; }
   .g-mlabel { padding:10px 14px; border-right:1px solid var(--line); display:flex; align-items:center; font-family:var(--mono); font-size:10px; letter-spacing:0.06em; text-transform:lowercase; color:var(--akm-blue); }
-  .g-mtrack { position:relative; height:58px; }
+  .g-mtrack { position:relative; height:72px; }
   .g-mtrack .v { position:absolute; top:0; bottom:0; border-left:1px dashed var(--line); }
-  .g-flag { position:absolute; top:10px; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:5px; cursor:pointer; background:none; border:0; font:inherit; width:max-content; max-width:130px; }
+  .g-flag { position:absolute; top:10px; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:5px; cursor:pointer; background:none; border:0; font:inherit; width:96px; max-width:96px; }
   .g-flag .dia2 { width:14px; height:14px; transform:rotate(45deg); border:1.6px solid var(--akm-blue); background:var(--card); transition:transform .14s; }
   .g-flag:hover .dia2 { transform:rotate(45deg) scale(1.18); }
   .g-flag:focus-visible { outline:none; }
@@ -139,7 +139,7 @@
     .mtoggle{ justify-content:space-between; }
     /* Gantt rola na horizontal, preservando largura mínima legível */
     .gantt{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
-    .gantt > *{ min-width:680px; }
+    .gantt > *{ min-width:920px; }
     /* dica visual de que rola */
     .ganttwrap-hint{ display:block; }
     /* gaveta vira tela cheia */
@@ -150,7 +150,7 @@
     .title{ font-size:clamp(30px,8vw,40px); }
   }
   @media (max-width:380px){
-    .gantt > *{ min-width:600px; }
+    .gantt > *{ min-width:880px; }
   }
   @media (prefers-reduced-motion:reduce){ *{ transition:none !important; } }
 </style>
@@ -182,7 +182,7 @@
   <p class="caption" id="caption"></p>
   <div class="intro-note" id="note"></div>
 
-  <div class="foot">As estimativas de tempo (aproximadamente 3 a 4 meses no total) são dimensionadas com precisão no diagnóstico. Documento de trabalho.</div>
+  <div class="foot">As estimativas de tempo (aproximadamente 3 a 4 meses no total) são dimensionadas com precisão no diagnóstico.<br>Pedro Alves · <a href="mailto:pedro19993613@gmail.com" style="color:var(--akm-blue); text-decoration:none;">pedro19993613@gmail.com</a></div>
 </div>
 
 <div class="scrim" id="scrim"></div>
