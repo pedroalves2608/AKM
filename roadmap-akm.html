@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadmap do Programa de IA · AKM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --akm-blue:#1F2BE0; --akm-blue-deep:#1620B0; --akm-blue-bg:#ECEEFF;
+    --coral-akm:#F0502A; --blush:#F0DCD6;
+    --ink:#16161E; --ink-soft:#4D4D5C; --ink-faint:#8A8A99;
+    --paper:#FBFAFB; --card:#FFFFFF; --line:#E5E4EC; --line-soft:#F0EFF4;
+    --info:#1F2BE0; --info-bg:#ECEEFF;
+    --m1:#C8431F; --m1-bg:#FBE3DB; --m1-tx:#8A2E12; --m1-st:#FDF2EE;
+    --m2:#B53A6B; --m2-bg:#F8E1EB; --m2-tx:#7E2549; --m2-st:#FCF1F6;
+    --m3:#8A3FB0; --m3-bg:#F1E4F8; --m3-tx:#5E2A78; --m3-st:#F9F1FC;
+    --gray:#4D4D5C; --gray-bg:#ECECF0; --gray-tx:#2A2A33; --gray-st:#F5F5F8;
+    --teal:#1F2BE0; --teal-bg:#E6E8FF; --teal-tx:#1620B0; --teal-st:#F0F1FF;
+    --purple:#5A52D6; --purple-bg:#EBEAFB; --purple-tx:#3A33A0; --purple-st:#F4F3FD;
+    --coral:#C8431F; --coral-bg:#FBE3DB; --coral-tx:#8A2E12; --coral-st:#FDF2EE;
+    --serif:"Fraunces", Georgia, serif;
+    --mono:"Space Mono", ui-monospace, Menlo, monospace;
+    --r:10px;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; background:var(--paper); color:var(--ink); line-height:1.55; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:1080px; margin:0 auto; padding:48px 28px 80px; }
+  .masthead { border-bottom:2.5px solid var(--akm-blue); padding-bottom:22px; }
+  .eyebrow { display:inline-block; font-family:var(--mono); font-size:11px; letter-spacing:0.18em; text-transform:lowercase; color:var(--akm-blue); border:1px solid var(--akm-blue); border-radius:999px; padding:5px 14px; }
+  .title { font-family:var(--serif); font-size:clamp(34px,5.5vw,56px); font-weight:600; letter-spacing:-0.01em; line-height:1.0; margin:16px 0 10px; }
+  .title em { font-style:italic; color:var(--akm-blue); font-weight:600; }
+  .lede { font-size:15px; color:var(--ink-soft); max-width:660px; }
+
+  /* control bar: lens + marcos toggle */
+  .controls { display:flex; align-items:center; justify-content:space-between; gap:16px; margin:28px 0 22px; flex-wrap:wrap; }
+  .lens { display:inline-flex; background:var(--line-soft); border:1px solid var(--line); border-radius:12px; padding:4px; gap:2px; }
+  .lens button { appearance:none; border:0; background:none; cursor:pointer; font:inherit; font-size:13.5px; font-weight:600; color:var(--ink-faint); padding:9px 18px; border-radius:9px; transition:all .16s; display:flex; flex-direction:column; align-items:center; line-height:1.15; }
+  .lens button small { font-family:var(--mono); font-size:9.5px; font-weight:400; margin-top:2px; letter-spacing:0.02em; opacity:.8; }
+  .lens button.on { background:var(--card); color:var(--ink); box-shadow:0 1px 3px rgba(0,0,0,.08); }
+  .lens button.on small { color:var(--akm-blue); }
+
+  .mtoggle { display:inline-flex; align-items:center; gap:10px; font-size:13px; color:var(--ink-soft); user-select:none; }
+  .mtoggle .lab { font-weight:600; }
+  .switch { position:relative; width:44px; height:25px; flex:none; }
+  .switch input { opacity:0; width:0; height:0; }
+  .slider { position:absolute; cursor:pointer; inset:0; background:var(--line); border-radius:999px; transition:.2s; border:1px solid var(--line); }
+  .slider::before { content:""; position:absolute; height:19px; width:19px; left:3px; top:2px; background:var(--card); border-radius:50%; transition:.2s; box-shadow:0 1px 2px rgba(0,0,0,.2); }
+  .switch input:checked + .slider { background:var(--akm-blue); border-color:var(--akm-blue); }
+  .switch input:checked + .slider::before { transform:translateX(19px); }
+  .switch input:focus-visible + .slider { box-shadow:0 0 0 3px var(--info-bg); }
+
+  /* gantt */
+  .ganttnote { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--ink-soft); margin-bottom:10px; font-family:var(--mono); letter-spacing:0.01em; }
+  .ganttnote b { color:var(--akm-blue); font-weight:700; }
+  .gn-dot { width:7px; height:7px; border-radius:50%; background:var(--akm-blue); flex:none; }
+  .lens-akm { color:var(--akm-blue); font-weight:700; letter-spacing:0.01em; }
+  .lens button.on .lens-akm { color:var(--akm-blue); }
+  .rl-akm { color:var(--akm-blue); font-weight:700; }
+  .gantt { position:relative; border:1px solid var(--line); border-radius:14px; background:var(--card); overflow:hidden; }
+  .g-axis { display:grid; grid-template-columns:158px 1fr; border-bottom:1px solid var(--line); background:var(--line-soft); }
+  .g-axis .corner { padding:10px 14px; font-family:var(--mono); font-size:10px; letter-spacing:0.06em; text-transform:lowercase; color:var(--ink-faint); border-right:1px solid var(--line); }
+  .g-weeks { position:relative; }
+  .g-weeks .axisfill { height:34px; }
+  .g-weeks .wklab { position:absolute; top:9px; font-family:var(--mono); font-size:10px; color:var(--ink-faint); transform:translateX(6px); }
+
+  /* milestone band */
+  .g-mrow { display:grid; grid-template-columns:158px 1fr; border-bottom:1px solid var(--line); background:linear-gradient(var(--akm-blue-bg), var(--card)); overflow:hidden; transition:max-height .28s ease, opacity .2s ease; max-height:80px; }
+  .g-mrow.hidden { max-height:0; opacity:0; border-bottom-width:0; }
+  .g-mlabel { padding:10px 14px; border-right:1px solid var(--line); display:flex; align-items:center; font-family:var(--mono); font-size:10px; letter-spacing:0.06em; text-transform:lowercase; color:var(--akm-blue); }
+  .g-mtrack { position:relative; height:58px; }
+  .g-mtrack .v { position:absolute; top:0; bottom:0; border-left:1px dashed var(--line); }
+  .g-flag { position:absolute; top:10px; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:5px; cursor:pointer; background:none; border:0; font:inherit; width:max-content; max-width:130px; }
+  .g-flag .dia2 { width:14px; height:14px; transform:rotate(45deg); border:1.6px solid var(--akm-blue); background:var(--card); transition:transform .14s; }
+  .g-flag:hover .dia2 { transform:rotate(45deg) scale(1.18); }
+  .g-flag:focus-visible { outline:none; }
+  .g-flag:focus-visible .dia2 { box-shadow:0 0 0 3px var(--info-bg); }
+  .g-flag .flab { font-size:10px; line-height:1.2; color:var(--ink-soft); text-align:center; font-weight:600; }
+
+  .g-row { display:grid; grid-template-columns:158px 1fr; border-bottom:1px solid var(--line-soft); transition:opacity .2s; }
+  .g-row:last-child { border-bottom:0; }
+  .g-row.hidden { display:none; }
+  .g-rowlabel { padding:14px; border-right:1px solid var(--line); display:flex; flex-direction:column; justify-content:center; gap:3px; }
+  .g-rowlabel .rl-t { font-family:var(--serif); font-size:16px; font-weight:600; color:var(--ink); }
+  .g-rowlabel .rl-s { font-size:11px; color:var(--ink-faint); }
+  .g-rowlabel .rl-pill { display:inline-block; width:fit-content; font-size:10px; font-weight:600; padding:2px 8px; border-radius:6px; margin-top:2px; }
+  .g-area { position:relative; }
+  .g-grid { position:absolute; inset:0; }
+  .g-grid .v { position:absolute; top:0; bottom:0; border-left:1px dashed var(--line); }
+  .g-bar { position:absolute; height:30px; border-radius:7px; border:1px solid; cursor:pointer; display:flex; align-items:center; padding:0 9px; font-size:11.5px; font-weight:600; transition:transform .14s, box-shadow .14s; background:none; font-family:inherit; white-space:nowrap; overflow:hidden; }
+  .g-bar:hover { transform:translateY(-1px); box-shadow:0 2px 10px rgba(0,0,0,.1); z-index:3; }
+  .g-bar:focus-visible { outline:none; box-shadow:0 0 0 3px var(--info-bg); }
+  .g-bar.dim { opacity:.6; border-style:dashed; }
+
+  /* detailed sub-rows (lens CEO / Empresa) */
+  .sub-area { position:relative; }
+  .sub-bar { position:absolute; height:26px; border-radius:6px; border:1px solid; cursor:pointer; display:flex; align-items:center; padding:0 8px; font-size:11px; font-weight:600; transition:transform .14s, box-shadow .14s; background:none; font-family:inherit; white-space:nowrap; overflow:hidden; }
+  .sub-bar:hover { transform:translateY(-1px); box-shadow:0 2px 8px rgba(0,0,0,.1); z-index:3; }
+  .sub-bar:focus-visible { outline:none; box-shadow:0 0 0 3px var(--info-bg); }
+  .sub-bar.dim { opacity:.62; border-style:dashed; }
+
+  .caption { margin-top:16px; font-size:12.5px; color:var(--ink-soft); }
+  .intro-note { margin-top:14px; font-size:13px; color:var(--ink-soft); background:var(--card); border:1px solid var(--line); border-left:3px solid var(--akm-blue); border-radius:var(--r); padding:14px 16px; }
+  .intro-note b { font-weight:600; color:var(--ink); }
+  .foot { margin-top:36px; padding-top:18px; border-top:1px solid var(--line); font-family:var(--mono); font-size:10.5px; color:var(--ink-faint); letter-spacing:0.02em; }
+
+  /* drawer */
+  .scrim { position:fixed; inset:0; background:rgba(20,18,12,.34); opacity:0; pointer-events:none; transition:opacity .24s; z-index:40; }
+  .scrim.show { opacity:1; pointer-events:auto; }
+  .drawer { position:fixed; top:0; right:0; height:100%; width:min(440px,92vw); background:var(--paper); border-left:1px solid var(--line); box-shadow:-16px 0 48px rgba(20,18,12,.16); transform:translateX(106%); transition:transform .3s cubic-bezier(.4,0,.2,1); z-index:50; display:flex; flex-direction:column; }
+  .drawer.show { transform:translateX(0); }
+  .dr-top { padding:26px 26px 18px; border-bottom:1px solid var(--line); position:relative; }
+  .dr-close { position:absolute; top:20px; right:20px; width:34px; height:34px; border-radius:8px; border:1px solid var(--line); background:var(--card); color:var(--ink-soft); cursor:pointer; font-size:19px; line-height:1; display:flex; align-items:center; justify-content:center; transition:all .14s; }
+  .dr-close:hover { border-color:var(--akm-blue); color:var(--ink); }
+  .dr-chip { display:inline-block; font-family:var(--mono); font-size:10px; padding:5px 11px; border-radius:8px; margin-bottom:12px; letter-spacing:0.04em; }
+  .dr-title { font-family:var(--serif); font-size:23px; font-weight:600; letter-spacing:-0.005em; line-height:1.18; padding-right:38px; }
+  .dr-body { padding:22px 26px 26px; overflow-y:auto; flex:1; }
+  .story { font-size:14px; line-height:1.6; padding:14px 16px; margin-bottom:18px; border-left:3px solid; border-radius:0 6px 6px 0; }
+  .story b { font-weight:600; }
+  .iocell { background:var(--card); border:1px solid var(--line); border-radius:var(--r); padding:14px; margin-bottom:11px; }
+  .iolabel { font-family:var(--mono); font-size:10px; letter-spacing:0.06em; text-transform:lowercase; color:var(--akm-blue); margin-bottom:8px; display:flex; align-items:center; gap:7px; }
+  .iolabel .ic { width:15px; height:15px; }
+  .iotext { font-size:13.5px; color:var(--ink); line-height:1.55; }
+  .iotext .nxt { color:var(--ink-faint); }
+  .dr-nav { display:flex; justify-content:space-between; gap:10px; padding:16px 26px; border-top:1px solid var(--line); }
+  .dr-nav button { font:inherit; font-size:13px; font-weight:600; padding:9px 16px; border-radius:8px; border:1px solid var(--line); background:var(--card); color:var(--ink); cursor:pointer; transition:all .14s; }
+  .dr-nav button:hover:not(:disabled) { border-color:var(--akm-blue); }
+  .dr-nav button:disabled { opacity:.38; cursor:default; }
+
+  @media (max-width:760px){ .g-axis,.g-mrow,.g-row{ grid-template-columns:108px 1fr; } .g-rowlabel{ padding:10px; } .lens button{ padding:8px 12px; } }
+  @media (max-width:640px){ .wrap{ padding:32px 18px 60px; } .controls{ flex-direction:column; align-items:stretch; } }
+  @media (prefers-reduced-motion:reduce){ *{ transition:none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <div class="eyebrow">#&nbsp;programa de transformação em ia</div>
+    <h1 class="title">Roadmap <em>AKM</em></h1>
+    <p class="lede">A liderança e a operação avançam em conjunto. Selecione a lente para examinar a mentoria da CEO, a transformação das áreas, ou ambas sobre o mesmo eixo de tempo. Cada etapa detalha o que recebe como insumo, o que é realizado e o que é entregue.</p>
+  </header>
+
+  <div class="controls">
+    <div class="lens" role="tablist" aria-label="Lente de visualização">
+      <button id="lens-both" class="on" role="tab" aria-selected="true" onclick="setLens('both')">Ambas<small>as duas frentes</small></button>
+      <button id="lens-ceo" role="tab" aria-selected="false" onclick="setLens('ceo')">CEO<small>12 sessões</small></button>
+      <button id="lens-emp" role="tab" aria-selected="false" onclick="setLens('emp')"><span class="lens-akm">AKM</span><small>3 ondas</small></button>
+    </div>
+    <label class="mtoggle">
+      <span class="lab">Marcos</span>
+      <span class="switch"><input type="checkbox" id="mtoggle" checked onchange="toggleMarcos(this.checked)"><span class="slider"></span></span>
+    </label>
+  </div>
+
+  <div class="ganttnote"><span class="gn-dot"></span> Sequência <b>ilustrativa</b> · a ordem e a lógica das ondas são definitivas; as durações exatas são estabelecidas no diagnóstico</div>
+  <div class="gantt" id="gantt"></div>
+
+  <p class="caption" id="caption"></p>
+  <div class="intro-note" id="note"></div>
+
+  <div class="foot">As estimativas de tempo (aproximadamente 3 a 4 meses no total) são dimensionadas com precisão no diagnóstico. Documento de trabalho.</div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Detalhe da etapa">
+  <div class="dr-top">
+    <button class="dr-close" id="drClose" aria-label="Fechar painel">×</button>
+    <span class="dr-chip" id="drChip"></span>
+    <div class="dr-title" id="drTitle"></div>
+  </div>
+  <div class="dr-body" id="drBody"></div>
+  <div class="dr-nav">
+    <button id="prev">← Anterior</button>
+    <button id="next">Próxima →</button>
+  </div>
+</aside>
+
+<script>
+
+(function(){
+  var IN='<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>';
+  var GEAR='<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>';
+  var OUT='<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>';
+
+  var TOTAL=15.5;
+  var weekMarks=[1,3,6,9,12,14];
+  function pc(ws,we){ return { left:((ws-1)/TOTAL*100), width:((we-ws)/TOTAL*100) }; }
+
+  var phaseColor={
+    1:{stroke:'var(--m1)', dottext:'var(--m1-tx)', seg:'#E2A53D', chip:'var(--m1-bg)', chiptext:'var(--m1-tx)', story:'var(--m1-st)', name:'Mês 1'},
+    2:{stroke:'var(--m2)', dottext:'var(--m2-tx)', seg:'#1D9E75', chip:'var(--m2-bg)', chiptext:'var(--m2-tx)', story:'var(--m2-st)', name:'Mês 2'},
+    3:{stroke:'var(--m3)', dottext:'var(--m3-tx)', seg:'#7F77DD', chip:'var(--m3-bg)', chiptext:'var(--m3-tx)', story:'var(--m3-st)', name:'Mês 3'}
+  };
+  var empRamp={
+    diag:{stroke:'var(--gray)', chip:'var(--gray-bg)', chiptext:'var(--gray-tx)', story:'var(--gray-st)', name:'Diagnóstico'},
+    ctrl:{stroke:'var(--teal)', chip:'var(--teal-bg)', chiptext:'var(--teal-tx)', story:'var(--teal-st)', name:'Controladoria'},
+    comp:{stroke:'var(--purple)', chip:'var(--purple-bg)', chiptext:'var(--purple-tx)', story:'var(--purple-st)', name:'Compras + Produção'},
+    cli:{stroke:'var(--coral)', chip:'var(--coral-bg)', chiptext:'var(--coral-tx)', story:'var(--coral-st)', name:'Cliente (fee)'}
+  };
+
+  var S=[{"n": 1, "m": 1, "short": "Primeira vitória", "title": "Da tarefa chata ao ganho imediato", "story": "Ao final deste encontro, Juliana será capaz de <b>resolver em 5 minutos uma tarefa real que hoje toma muito do seu tempo</b> (um e-mail difícil, um resumo, um preparo de reunião) usando IA.", "input": "Uma tarefa recorrente e concreta da semana dela, trazida por ela.", "doo": "Execução conjunta da tarefa, ao vivo, com IA, desenvolvendo o domínio da ferramenta no processo.", "output": "A tarefa concluída e o primeiro comando eficaz documentado para reutilização."}, {"n": 2, "m": 1, "short": "Síntese", "title": "Resumir o que antes consumia horas", "story": "Ao final deste encontro, Juliana será capaz de <b>transformar documentos longos, atas e relatórios em 3 pontos úteis</b> e chegar a qualquer reunião preparada em minutos.", "input": "Documentos e atas reais que ela costuma ter de ler.", "doo": "Prática de síntese e extração de pontos-chave a partir do material real dela.", "output": "Um método pessoal de síntese e modelos de prompt para reaproveitar."}, {"n": 3, "m": 1, "short": "Produção", "title": "Primeira versão sai da IA", "story": "Ao final deste encontro, Juliana será capaz de <b>gerar a primeira versão de textos, comunicados e apresentações</b> com IA, restando a ela apenas editar e dar o tom.", "input": "Um texto ou apresentação que ela precisa produzir de verdade.", "doo": "Geração de versões iniciais com IA e refinamento da edição até o padrão dela.", "output": "A peça finalizada e um fluxo de produção assistida para o dia a dia."}, {"n": 4, "m": 1, "short": "Kit pessoal", "title": "O conjunto de ferramentas dela", "story": "Ao final deste encontro, Juliana será capaz de <b>usar com autonomia o seu próprio kit de IA</b>: as poucas ferramentas e atalhos que ela de fato vai usar, sem sobrecarga.", "input": "O que ela já experimentou nas sessões 1 a 3 e as ferramentas disponíveis (inclusive o Copilot do ambiente Microsoft).", "doo": "Curadoria do kit essencial e organização do ambiente de uso do dia a dia.", "output": "Kit pessoal definido e rotina de uso. Fecha o mês 1: ela já economiza tempo sozinha."}, {"n": 5, "m": 2, "short": "IA na AKM", "title": "IA aplicada ao que a agência faz", "story": "Ao final deste encontro, Juliana será capaz de <b>enxergar onde a IA entra no trabalho criativo e de marketing</b> da AKM: geração e variação de conceitos, copy, briefings.", "input": "Exemplos reais de entregas e briefings da agência.", "doo": "Exploração de casos de uso aplicados ao negócio dela, não exemplos genéricos.", "output": "Mapa de oportunidades de IA nas entregas da AKM, na visão da liderança."}, {"n": 6, "m": 2, "short": "Dados", "title": "Conversar com os dados de campanha", "story": "Ao final deste encontro, Juliana será capaz de <b>ler dados de campanha e dashboards conversando com a IA</b>, transformando número em decisão.", "input": "Relatórios e dados de performance que ela acompanha.", "doo": "Prática de análise conversacional sobre os dados reais da agência.", "output": "Autonomia para consultar dados sem depender de terceiros a cada pergunta."}, {"n": 7, "m": 2, "short": "Decisão", "title": "IA como apoio à estratégia", "story": "Ao final deste encontro, Juliana será capaz de <b>usar IA para apoiar decisões estratégicas</b>: montar cenários, analisar oportunidades, pressionar-testar ideias.", "input": "Uma decisão ou questão estratégica real que ela esteja enfrentando.", "doo": "Uso da IA como contraponto de raciocínio sobre um caso real dela.", "output": "Um método para estruturar decisões com apoio de IA."}, {"n": 8, "m": 2, "short": "Ponte", "title": "Onde os processos podem acelerar", "story": "Ao final deste encontro, Juliana será capaz de <b>identificar, com olhar de liderança, onde os processos da agência podem ficar mais rápidos</b>, conectando sua trilha à transformação das áreas.", "input": "O que ela observou nas sessões 5 a 7 e o andamento das frentes da empresa.", "doo": "Conexão entre a visão da liderança e as ondas em curso na operação.", "output": "Lista de prioridades da CEO para a transformação. Fecha o mês 2: ela lidera com IA."}, {"n": 9, "m": 3, "short": "Mercado", "title": "Hype versus real no mercado", "story": "Ao final deste encontro, Juliana será capaz de <b>distinguir o que é hype do que é real em IA</b> e se posicionar à frente, sabendo como agências líderes usam a tecnologia.", "input": "Tendências e casos do mercado de agências e comunicação.", "doo": "Análise crítica do que é aplicável à AKM e do que é apenas ruído.", "output": "Uma visão de mercado fundamentada, pronta para conversas externas."}, {"n": 10, "m": 3, "short": "Clientes", "title": "Falar de IA com os clientes", "story": "Ao final deste encontro, Juliana será capaz de <b>levar IA como diferencial comercial para os clientes</b> da AKM, transformando o tema em narrativa de venda.", "input": "O perfil dos principais clientes e as oportunidades comerciais.", "doo": "Construção do discurso de IA da AKM para o mercado.", "output": "Narrativa comercial de IA que ela pode usar com clientes e prospects."}, {"n": 11, "m": 3, "short": "Governança", "title": "Uso responsável e riscos", "story": "Ao final deste encontro, Juliana será capaz de <b>tomar decisões seguras sobre uso de IA</b>: dados de cliente, propriedade intelectual, riscos e o que uma CEO precisa dominar.", "input": "Os contextos de risco reais da agência (dados sensíveis, contratos, propriedade intelectual).", "doo": "Cobertura dos pontos de governança que protegem a empresa.", "output": "Critérios de uso responsável de IA para a liderança da AKM."}, {"n": 12, "m": 3, "short": "Liderar", "title": "Conduzir a transformação interna", "story": "Ao final deste encontro, Juliana será capaz de <b>liderar a agenda de IA da AKM pelo exemplo</b>: engajar os 120, sustentar a cultura e patrocinar a continuidade do programa.", "input": "Todo o percurso das 11 sessões e o estado das frentes da empresa.", "doo": "Consolidação do papel dela como patrocinadora e definição dos próximos passos.", "output": "Plano da CEO para a continuidade. Fecha a trilha: de usuária a líder da agenda de IA."}];
+  var monthDetails={"1": {"chip": "Mês 1 de 3 · Fluência · sessões 1 a 4", "title": "Fluência: IA já me poupa tempo", "story": "No primeiro mês, Juliana sai do zero e passa a <b>usar IA com autonomia no próprio dia a dia</b>. O foco é ganho imediato e concreto: ao fim do mês, ela já economiza tempo sozinha.", "conquista": "Resolver tarefas reais em minutos, resumir documentos longos, gerar primeiras versões de textos e montar seu kit pessoal de ferramentas.", "cobre": "Sessões 1 a 4 · Primeira vitória · Síntese · Produção · Kit pessoal", "marco": "Marco do mês: autonomia no uso diário de IA."}, "2": {"chip": "Mês 2 de 3 · Vantagem · sessões 5 a 8", "title": "Vantagem: IA me ajuda a liderar a AKM", "story": "No segundo mês, a IA passa do uso pessoal para a <b>liderança do negócio</b>. Juliana aplica IA ao trabalho da agência, aos dados e às decisões, e começa a enxergar onde a operação pode acelerar.", "conquista": "Aplicar IA às entregas da agência, ler dados conversando com a IA, apoiar decisões estratégicas e mapear prioridades para a transformação das áreas.", "cobre": "Sessões 5 a 8 · IA na AKM · Dados · Decisão · Ponte", "marco": "Marco do mês: liderar com IA."}, "3": {"chip": "Mês 3 de 3 · Comando · sessões 9 a 12", "title": "Comando: eu lidero a agenda de IA", "story": "No terceiro mês, Juliana assume o papel de <b>patrocinadora da agenda de IA</b> da AKM: posiciona-se no mercado, leva o tema aos clientes, domina os riscos e conduz a transformação interna pelo exemplo.", "conquista": "Distinguir hype de real, transformar IA em diferencial comercial, dominar uso responsável e engajar os 120 na cultura de IA.", "cobre": "Sessões 9 a 12 · Mercado · Clientes · Governança · Liderar", "marco": "Marco do mês: tornar-se patrocinadora da agenda de IA."}};
+  var empDetails={"diag": {"title": "Diagnóstico e baseline", "sub": "Semanas 1 a 3 · abre o programa antes de qualquer piloto · gera um Project Charter por frente", "story": "É a leitura precisa do estado atual de cada departamento. <b>Sem baseline, ganho é alegação; com baseline, é prova.</b>", "input": "Baseline operacional de cada frente: processos atuais (o que o time faz, fluxos mapeados); KPIs (volume, tempo médio de execução, SLA, produtividade); estrutura da equipe (pessoas, papéis, capacidade vs. utilizada); ferramentas e gargalos; custos operacionais; qualidade (retrabalho, erros, satisfação); e demanda histórica dos últimos 3 a 12 meses.", "doo": "Mapeamento dos processos atuais e mensuração de desempenho (tempo, volume, retrabalho) para estabelecer o baseline. As oportunidades são então priorizadas por uma matriz de Impacto versus Esforço, que define a ordem das ondas com critério objetivo.", "output": "Project Charter por frente, tabela de baseline e o plano de ondas: a base que dimensiona o trabalho contínuo com precisão."}, "ctrl": {"title": "Onda 1 · Controladoria", "sub": "Começa ao fim do diagnóstico · área já organizada, retorno rápido", "story": "A primeira frente é escolhida por ser a de <b>retorno mais rápido</b>: a vitória que abre caminho para as próximas.", "input": "Project Charter e baseline da controladoria (volume de lançamentos, tempo de fechamento, retrabalho) e o embaixador da área.", "doo": "Desenho dos pilotos priorizados, executados pelo embaixador da área em sprints de 1 a 2 semanas, com medição contínua contra o baseline.", "output": "Relatórios de resultado (antes e depois), processos documentados e os primeiros ganhos visíveis."}, "comp": {"title": "Onda 2 · Compras e Produção", "sub": "Entra quando a controladoria já está estável · frentes interligadas", "story": "Duas áreas que se supervisionam, atacadas juntas. A IA já tem <b>maturidade</b> em cotação e seleção de fornecedores.", "input": "Charter e baseline de compras e produção (nº de cotações, tempo por orçamento, fornecedores) e o aprendizado da onda 1.", "doo": "Aplicação do mesmo ciclo às rotinas de cotação, comparação e seleção de fornecedores.", "output": "Processos de compras e produção otimizados e documentados, com ganho medido e adoção confirmada."}, "cli": {"title": "Onda 3 · Cliente (fee)", "sub": "Última onda · a mais complexa · diagnóstico pode vir depois das duas primeiras", "story": "A esteira de cliente é a frente mais sensível: entra por último, com as anteriores já provadas. <b>Seu diagnóstico pode ser feito depois</b>, sem travar o início do programa.", "input": "Baseline da esteira de um cliente fee (negócios, planejamento, criação, produção, execução) e tudo aprendido nas ondas anteriores.", "doo": "Identificação dos pontos em que a IA acelera a esteira sem comprometer a flexibilidade criativa, com pilotos conduzidos e medidos junto ao embaixador.", "output": "Esteira de cliente mais ágil e mensurável, documentada, e a base para discutir o Brain AKM como próximo capítulo."}};
+  var milestoneDetails={"m-diag": {"chip": "Marco · fim da semana 3", "title": "Diagnóstico aprovado", "story": "Primeiro ponto de decisão do programa. <b>O Project Charter e o baseline de cada frente estão prontos e o plano de ondas é aprovado pela liderança.</b> É o sinal verde que destrava os pilotos.", "entrega": "Project Charter por frente, tabela de baseline (o estado atual medido) e o plano de ondas priorizado.", "porque": "Sem este marco, os pilotos não começam: é aqui que se decide, com dados, por onde atacar e em que ordem."}, "m-ganho": {"chip": "Marco · fim da onda 1 (~semana 7)", "title": "Primeiro ganho comprovado", "story": "O marco mais importante do programa. <b>O primeiro relatório antes e depois, com número real, comprova que a IA gerou ganho na controladoria.</b> Deixa de ser promessa e vira evidência.", "entrega": "Relatório de resultado da onda 1 (ganho medido contra o baseline) e o processo documentado.", "porque": "É a prova que sustenta a continuidade do programa diante do board e dos investidores. A primeira vitória que abre caminho."}, "m-duas": {"chip": "Marco · fim da onda 2 (~semana 10)", "title": "Controladoria e Compras em operação", "story": "Transição de piloto para operação. <b>As duas primeiras frentes (Controladoria e Compras e Produção) já têm processos de IA documentados e em uso pelas equipes</b>, enquanto a frente de Cliente avança em paralelo.", "entrega": "Processos documentados e adotados nas duas frentes concluídas, com ganhos medidos em ambas.", "porque": "Mostra que o método se repete e escala entre áreas, não foi um acerto isolado na primeira frente."}, "m-fim": {"chip": "Marco · fim do programa (~semana 14)", "title": "CEO patrocinadora e frentes documentadas", "story": "Ponto de decisão sobre o futuro. <b>A CEO concluiu a trilha e assume a agenda de IA; as frentes piloto estão documentadas.</b> O programa está pronto para o próximo capítulo.", "entrega": "Trilha da CEO concluída, frentes documentadas e a base para decidir os próximos passos (escalar para novas áreas, Brain AKM).", "porque": "É a decisão de continuidade: com liderança capacitada e método provado, define-se como expandir a transformação."}};
+
+  var empOrder=['diag','ctrl','comp','cli'];
+  var empBars={ diag:{ws:1,we:3}, ctrl:{ws:3,we:7}, comp:{ws:6,we:10}, cli:{ws:9,we:14,dim:true} };
+
+  var lens='both', showMarcos=true;
+  var mode=null, current=null;
+  var drawer=document.getElementById('drawer'), scrim=document.getElementById('scrim');
+
+  var captions={
+    both:'As duas raias compartilham o mesmo eixo de tempo, o que permite identificar, em qualquer ponto, o estágio simultâneo da CEO e da AKM. As semanas são aproximadas; o diagnóstico define as durações reais.',
+    ceo:'A mentoria da CEO em detalhe: 12 sessões encadeadas ao longo de três meses, cada uma construída sobre a anterior.',
+    emp:'A transformação das áreas em ondas escalonadas: cada frente tem início somente quando a anterior está estável.'
+  };
+  var notes={
+    both:'Visão consolidada para a liderança. A faixa de <b>marcos</b> indica os pontos de decisão e as entregas que comprovam o avanço. Utilize a lente acima para isolar uma frente; o botão <b>Marcos</b> exibe ou oculta essa camada.',
+    ceo:'Uma progressão estruturada: da <b>primeira utilização</b> à <b>liderança da agenda de IA</b>. Selecione qualquer sessão para ver objetivo, insumo, atividade e entrega.',
+    emp:'As frentes operam <b>em ondas escalonadas</b>: nunca duas iniciando simultaneamente. A sobreposição parcial entre elas acelera o programa sem concentrar todo o esforço de uma vez. Selecione cada frente para o detalhe.'
+  };
+
+  function buildGantt(){
+    var g=document.getElementById('gantt');
+    g.innerHTML='';
+
+    // axis
+    var axis=document.createElement('div'); axis.className='g-axis';
+    var corner=document.createElement('div'); corner.className='corner'; corner.textContent='ondas · ~sem';
+    var weeks=document.createElement('div'); weeks.className='g-weeks';
+    var fill=document.createElement('div'); fill.className='axisfill'; weeks.appendChild(fill);
+    var axisLabels={1:'início',3:'onda 1',6:'onda 2',9:'onda 3',12:'',14:'fim'};
+    weekMarks.forEach(function(w){ var l=document.createElement('div'); l.className='wklab'; l.style.left=((w-1)/TOTAL*100)+'%'; l.innerHTML=(axisLabels[w]?'<b style="color:var(--ink-soft)">'+axisLabels[w]+'</b> ':'')+'<span style="opacity:.6">~s'+w+'</span>'; weeks.appendChild(l); });
+    axis.appendChild(corner); axis.appendChild(weeks); g.appendChild(axis);
+
+    // milestone band
+    var milestones=[
+      {at:3,label:'Diagnóstico aprovado',key:'m-diag'},
+      {at:7,label:'1º ganho comprovado',key:'m-ganho'},
+      {at:10,label:'Controladoria e Compras em operação',key:'m-duas'},
+      {at:14,label:'CEO patrocinadora + frentes documentadas',key:'m-fim'}
+    ];
+    var mrow=document.createElement('div'); mrow.className='g-mrow'+(showMarcos?'':' hidden'); mrow.id='mrow';
+    var mlab=document.createElement('div'); mlab.className='g-mlabel'; mlab.textContent='marcos';
+    var mtrack=document.createElement('div'); mtrack.className='g-mtrack';
+    weekMarks.forEach(function(w){ var v=document.createElement('div'); v.className='v'; v.style.left=((w-1)/TOTAL*100)+'%'; mtrack.appendChild(v); });
+    milestones.forEach(function(m){
+      var fl=document.createElement('button'); fl.type='button'; fl.className='g-flag';
+      var pos=((m.at-1)/TOTAL*100); fl.style.left=pos+'%';
+      if(pos>92){ fl.style.transform='translateX(-80%)'; }
+      fl.innerHTML='<span class="dia2"></span><span class="flab">'+m.label+'</span>';
+      fl.setAttribute('aria-label','Marco: '+m.label);
+      fl.addEventListener('click', function(){ openMilestone(m.key); });
+      mtrack.appendChild(fl);
+    });
+    mrow.appendChild(mlab); mrow.appendChild(mtrack); g.appendChild(mrow);
+
+    // ===== rows depend on lens =====
+    if(lens==='both'){
+      g.appendChild(rowCeoMacro());
+      g.appendChild(rowEmp());
+    } else if(lens==='ceo'){
+      g.appendChild(rowCeoDetailed());
+    } else {
+      g.appendChild(rowEmp());
+    }
+  }
+
+  function gridLayer(){
+    var grid=document.createElement('div'); grid.className='g-grid';
+    weekMarks.forEach(function(w){ var v=document.createElement('div'); v.className='v'; v.style.left=((w-1)/TOTAL*100)+'%'; grid.appendChild(v); });
+    return grid;
+  }
+
+  function rowLabel(t,s,pill){
+    var lab=document.createElement('div'); lab.className='g-rowlabel';
+    var html='<span class="rl-t">'+t+'</span><span class="rl-s">'+s+'</span>';
+    if(pill){ html+='<span class="rl-pill" style="background:'+pill.bg+'; color:'+pill.tx+';">'+pill.t+'</span>'; }
+    lab.innerHTML=html; return lab;
+  }
+
+  // CEO macro (3 month bars) for "both"
+  function rowCeoMacro(){
+    var r=document.createElement('div'); r.className='g-row';
+    r.appendChild(rowLabel('CEO','mentoria 1:1',{t:'3 meses', bg:'var(--m1-bg)', tx:'var(--m1-tx)'}));
+    var area=document.createElement('div'); area.className='g-area'; area.style.height='74px';
+    area.appendChild(gridLayer());
+    var mbars=[
+      {ws:1,we:5,label:'Fluência · ganhar autonomia',m:1,month:1},
+      {ws:5,we:9,label:'Vantagem · liderar com IA',m:2,month:2},
+      {ws:9,we:13.5,label:'Comando · liderar a agenda',m:3,month:3}
+    ];
+    mbars.forEach(function(b){
+      var c=phaseColor[b.m], p=pc(b.ws,b.we);
+      var el=document.createElement('button'); el.type='button'; el.className='g-bar';
+      el.style.left=p.left+'%'; el.style.width=p.width+'%'; el.style.top='22px';
+      el.style.background=c.story; el.style.borderColor=c.stroke; el.style.color=c.chiptext;
+      el.textContent=b.label; el.setAttribute('aria-label','CEO: '+b.label);
+      el.addEventListener('click', function(){ openMonth(b.month); });
+      area.appendChild(el);
+    });
+    r.appendChild(area); return r;
+  }
+
+  // CEO detailed (12 sessions across, 3 rows visually compressed into one lane band) for "ceo"
+  function rowCeoDetailed(){
+    var r=document.createElement('div'); r.className='g-row';
+    r.appendChild(rowLabel('CEO','12 sessões · 3 meses',{t:'detalhe', bg:'var(--m1-bg)', tx:'var(--m1-tx)'}));
+    var area=document.createElement('div'); area.className='g-area'; area.style.height='150px';
+    area.appendChild(gridLayer());
+    // place 12 sessions as small bars on a continuous week scale: ~1.1 week each starting at week 1
+    // months: 1-4 (weeks 1-4.3), 5-8 (weeks 4.7-8.3), 9-12 (weeks 9-13.5) - approx to mirror macro
+    var starts=[1,2,3,4, 5,6,7,8, 9,10.1,11.2,12.3];
+    var widthW=1.15;
+    var rowY=[14,50,86]; // three visual rows by month
+    S.forEach(function(s,i){
+      var c=phaseColor[s.m];
+      var ws=starts[i], we=ws+widthW;
+      var p=pc(ws,we);
+      var el=document.createElement('button'); el.type='button'; el.className='sub-bar';
+      el.style.left=p.left+'%'; el.style.width=p.width+'%';
+      el.style.top=rowY[s.m-1]+'px';
+      el.style.background=c.story; el.style.borderColor=c.stroke; el.style.color=c.chiptext;
+      el.innerHTML='<span style="font-family:var(--mono);font-size:9px;margin-right:4px;opacity:.7;flex:none">'+s.n+'</span><span style="overflow:hidden;text-overflow:ellipsis">'+s.short+'</span>';
+      el.setAttribute('aria-label','Sessão '+s.n+': '+s.title);
+      el.addEventListener('click', function(){ openCeo(s.n); });
+      area.appendChild(el);
+    });
+    // month tags at right edge of each row
+    r.appendChild(area); return r;
+  }
+
+  function rowEmp(){
+    var r=document.createElement('div'); r.className='g-row';
+    r.appendChild(rowLabel('<span class="rl-akm">AKM</span>','diagnóstico + 3 ondas',{t:'em ondas', bg:'var(--teal-bg)', tx:'var(--teal-tx)'}));
+    var area=document.createElement('div'); area.className='g-area'; area.style.height='162px';
+    area.appendChild(gridLayer());
+    var rows=[
+      {key:'diag', y:12, label:'Diagnóstico'},
+      {key:'ctrl', y:48, label:'Controladoria'},
+      {key:'comp', y:84, label:'Compras + Produção'},
+      {key:'cli',  y:120, label:'Cliente fee'}
+    ];
+    rows.forEach(function(rw){
+      var b=empBars[rw.key], rmp=empRamp[rw.key], p=pc(b.ws,b.we);
+      var el=document.createElement('button'); el.type='button'; el.className='sub-bar'+(b.dim?' dim':'');
+      el.style.left=p.left+'%'; el.style.width=p.width+'%'; el.style.top=rw.y+'px';
+      el.style.background=rmp.story; el.style.borderColor=rmp.stroke; el.style.color=rmp.chiptext;
+      el.textContent=rw.label+(b.dim?' · posterior':'');
+      el.setAttribute('aria-label', rmp.name);
+      el.addEventListener('click', function(){ openEmp(rw.key); });
+      area.appendChild(el);
+    });
+    r.appendChild(area); return r;
+  }
+
+  /* ---------- drawer ---------- */
+  function openMonth(m){
+    mode='month'; current=m;
+    var d=monthDetails[m], c=phaseColor[m];
+    setHead(d.chip, c.chip, c.chiptext, d.title);
+    document.getElementById('drBody').innerHTML=
+      story(d.story,c.story,c.stroke)
+      +cell(GEAR,'foco do mês', d.conquista)
+      +cell(IN,'sessões', d.cobre)
+      +cell(OUT,'marco', d.marco+' <span class="nxt">Veja as sessões em detalhe na lente CEO.</span>');
+    navState('month', m); show();
+  }
+  function openCeo(n){
+    mode='ceo'; current=n;
+    var s=S[n-1], c=phaseColor[s.m];
+    setHead('Sessão '+n+' de 12 · '+c.name, c.chip, c.chiptext, s.title);
+    var nextTxt=n<12?'Conecta com a Sessão '+(n+1)+'.':'Encerra a jornada de 3 meses.';
+    document.getElementById('drBody').innerHTML=
+      story(s.story,c.story,c.stroke)
+      +cell(IN,'insumo', s.input)
+      +cell(GEAR,'atividade', s.doo)
+      +cell(OUT,'entrega', s.output+' <span class="nxt">'+nextTxt+'</span>');
+    navState('ceo', n); show();
+  }
+  function openEmp(key){
+    mode='emp'; current=key;
+    var d=empDetails[key], r=empRamp[key];
+    setHead(r.name, r.chip, r.chiptext, d.title);
+    document.getElementById('drBody').innerHTML=
+      '<div class="story" style="background:'+r.story+'; border-color:'+r.stroke+';">'+d.story+'<br><span style="color:var(--ink-soft); font-size:12.5px;">'+d.sub+'</span></div>'
+      +cell(IN,'insumo', d.input)
+      +cell(GEAR,'atividade', d.doo)
+      +cell(OUT,'entrega', d.output);
+    navState('emp', key); show();
+  }
+  function openMilestone(key){
+    mode='mile'; current=key;
+    var d=milestoneDetails[key];
+    setHead(d.chip, 'var(--akm-blue-bg)', 'var(--akm-blue-deep)', d.title);
+    document.getElementById('drBody').innerHTML=
+      story(d.story,'var(--akm-blue-bg)','var(--akm-blue)')
+      +cell(OUT,'entrega', d.entrega)
+      +cell(GEAR,'relevância', d.porque);
+    navState('mile', key); show();
+  }
+
+  function setHead(chip,bg,col,title){
+    var ch=document.getElementById('drChip');
+    ch.textContent=chip; ch.style.background=bg; ch.style.color=col;
+    document.getElementById('drTitle').textContent=title;
+  }
+  function story(t,bg,bc){ return '<div class="story" style="background:'+bg+'; border-color:'+bc+';">'+t+'</div>'; }
+  function cell(icon,label,text){ return '<div class="iocell"><div class="iolabel">'+icon+label+'</div><div class="iotext">'+text+'</div></div>'; }
+
+  function navState(kind, cur){
+    var p=document.getElementById('prev'), n=document.getElementById('next');
+    if(kind==='month'){ p.disabled=(cur<=1); n.disabled=(cur>=3); }
+    else if(kind==='ceo'){ p.disabled=(cur<=1); n.disabled=(cur>=12); }
+    else if(kind==='mile'){ var o=['m-diag','m-ganho','m-duas','m-fim'],i=o.indexOf(cur); p.disabled=(i<=0); n.disabled=(i>=o.length-1); }
+    else { var i=empOrder.indexOf(cur); p.disabled=(i<=0); n.disabled=(i>=empOrder.length-1); }
+  }
+
+  function show(){ drawer.classList.add('show'); scrim.classList.add('show'); }
+  function close(){ drawer.classList.remove('show'); scrim.classList.remove('show'); current=null; }
+
+  document.getElementById('drClose').addEventListener('click', close);
+  scrim.addEventListener('click', close);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape'&&drawer.classList.contains('show')) close(); });
+  document.getElementById('prev').addEventListener('click', function(){
+    if(mode==='month'){ if(current>1) openMonth(current-1); }
+    else if(mode==='ceo'){ if(current>1) openCeo(current-1); }
+    else if(mode==='mile'){ var o=['m-diag','m-ganho','m-duas','m-fim'],i=o.indexOf(current); if(i>0) openMilestone(o[i-1]); }
+    else { var i=empOrder.indexOf(current); if(i>0) openEmp(empOrder[i-1]); }
+  });
+  document.getElementById('next').addEventListener('click', function(){
+    if(mode==='month'){ if(current<3) openMonth(current+1); }
+    else if(mode==='ceo'){ if(current<12) openCeo(current+1); }
+    else if(mode==='mile'){ var o=['m-diag','m-ganho','m-duas','m-fim'],i=o.indexOf(current); if(i<o.length-1) openMilestone(o[i+1]); }
+    else { var i=empOrder.indexOf(current); if(i<empOrder.length-1) openEmp(empOrder[i+1]); }
+  });
+
+  window.setLens=function(which){
+    lens=which;
+    ['both','ceo','emp'].forEach(function(k){
+      var b=document.getElementById('lens-'+k);
+      b.classList.toggle('on', k===which); b.setAttribute('aria-selected', k===which);
+    });
+    document.getElementById('caption').textContent=captions[which];
+    document.getElementById('note').innerHTML=notes[which];
+    if(drawer.classList.contains('show')) close();
+    buildGantt();
+  };
+  window.toggleMarcos=function(on){
+    showMarcos=on;
+    var mrow=document.getElementById('mrow');
+    if(mrow) mrow.classList.toggle('hidden', !on);
+  };
+
+  document.getElementById('caption').textContent=captions.both;
+  document.getElementById('note').innerHTML=notes.both;
+  buildGantt();
+})();
+
+</script>
+</body>
+</html>
